@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Ticket Count: <span id="ticket-count">{{ count }}</span></h1>
+    <button onclick="takeTicket()">Take Ticket</button>
+
+    <script>
+        const socket = io();
+
+        function takeTicket() {
+            socket.emit("request_ticket");
+        }
+
+        socket.on("update_count", function(data) {
+            document.getElementById("ticket-count").innerText = data.count;
+        });
+    </script>
+</body>
+</html>

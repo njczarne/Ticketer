@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Ticket Screen</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+    <h1>Total Tickets: <span id="ticket-count">{{ count }}</span></h1>
+    <h2>Current Ticket: <span id="current-ticket">{{ current }}</span></h2>
+
+    <label for="group-input">Group:</label>
+    <input type="number" id="group-input" placeholder="Enter group number" min="1">
+    <br><br>
+
+    <button onclick="takeTicket()">Take Ticket</button>
+    <h2 id="my-ticket" style="color:blue; display:none;"></h2>
+
+    <script>
+        const socket = io();
+
+        function takeTicket() {
+            const groupValue = document.getElementById("group-input").value;
+
+            if (!groupValue || isNaN(groupValue) || groupValue <= 0) {
+                alert("Please enter a valid group number before taking a ticket.");
+                return;
+            }
+
+            socket.emit("request_ticket", { group: parseInt(groupValue) });
+        }
+
+        socket.on("update_count", function(data) {
+            document.getElementById("ticket-count").innerText = data.count;
+        });
+
+        socket.on("your_ticket", function(data) {
+            const ticketField = document.getElementById("my-ticket");
+            ticketField.innerText =
+                "Your Ticket Number: " + data.ticket_number + " (Group " + data.group + ")";
+            ticketField.style.display = "block";
+        });
+
+        socket.on("update_current_ticket", function(data) {
+            document.getElementById("current-ticket").innerText = data.current;
+        });
+
+        // NEW: clear student ticket display on reset
+        socket.on("clear_student_ticket", function() {
+            const ticketField = document.getElementById("my-ticket");
+            ticketField.innerText = "";
+            ticketField.style.display = "none";
+            document.getElementById("group-input").value = ""; // also clear group input
+        });
+    </script>
+</body>
+</html>

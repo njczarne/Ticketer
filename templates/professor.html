@@ -3,21 +3,27 @@
 <head>
     <title>Professor Ticket Screen</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
-    <style>
-        .ticket { font-size: 1.2em; }
-        .completed { color: red; font-weight: bold; }
-        button { margin: 8px; padding: 8px 12px; font-size: 1em; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="text-align:center; font-family:sans-serif;">
+<body>
     <h1>Total Tickets: <span id="ticket-count">{{ count }}</span></h1>
     <h2>Current Ticket: <span id="current-ticket">{{ current }}</span></h2>
 
     <button onclick="completeTicket()">Complete Ticket</button>
-    <button onclick="resetSystem()" style="background-color:#d9534f; color:white;">Reset System</button>
+    <button onclick="resetSystem()" class="reset">Reset System</button>
 
     <h3>Dashboard</h3>
-    <div id="dashboard"></div>
+    <div id="dashboard">
+        {% if not tickets %}
+            <p><em>No tickets yet</em></p>
+        {% else %}
+            {% for ticket in tickets %}
+                <div class="ticket {% if ticket.completed %}completed{% endif %}">
+                    Ticket {{ ticket.number }} - Group {{ ticket.group }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
     <script>
         const socket = io();

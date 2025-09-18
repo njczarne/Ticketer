@@ -1,0 +1,75 @@
+body {
+    text-align: center;
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button.reset {
+    background-color: #d9534f;
+}
+
+button.reset:hover {
+    background-color: #c9302c;
+}
+
+input[type="number"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 200px;
+    font-size: 16px;
+}
+
+#my-ticket {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+#dashboard {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: left;
+}
+
+.ticket {
+    font-size: 1.2em;
+    padding: 5px 0;
+}
+
+.completed {
+    color: red;
+    font-weight: bold;
+    text-decoration: line-through;
+}

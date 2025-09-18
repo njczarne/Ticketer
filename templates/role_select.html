@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Select Role</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="text-align:center; font-family:sans-serif;">
+<body>
     <h1>Choose Your Role</h1>
     <button onclick="window.location.href='/student'">I am a Student</button>
     <button onclick="window.location.href='/professor'">I am a Professor</button>

@@ -3,8 +3,9 @@
 <head>
     <title>Student Ticket Screen</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="text-align:center; font-family:sans-serif;">
+<body>
     <h1>Total Tickets: <span id="ticket-count">{{ count }}</span></h1>
     <h2>Current Ticket: <span id="current-ticket">{{ current }}</span></h2>
 
@@ -13,7 +14,7 @@
     <br><br>
 
     <button onclick="takeTicket()">Take Ticket</button>
-    <h2 id="my-ticket" style="color:blue; display:none;"></h2>
+    <h2 id="my-ticket" style="display:none;"></h2>
 
     <script>
         const socket = io();

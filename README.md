@@ -43,6 +43,9 @@ python app.py
 
 By default, the server runs on port `5000`.
 
+Go to the third IP address displayed. 
+This IP address can be accessed by anyone on the same WiFi network as the server.
+
 ---
 
 ## 🖥️ Usage
@@ -106,3 +109,4 @@ On the homepage, click either:
 * Multiple students and professors can be connected at the same time — updates are broadcast to all.
 * If the professor resets the system, all students’ ticket numbers are cleared and they must re-enter their group number to get a new ticket.
 * This implementation uses in-memory storage (`tickets[]`, counters). If the server restarts, all data is lost — persistent storage can be added later if needed.
+

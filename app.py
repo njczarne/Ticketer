@@ -6,7 +6,7 @@ socketio = SocketIO(app)
 
 ticket_count = 0        # total number of tickets issued
 current_ticket = 0      # ticket currently being served (0 = none)
-tickets = []            # list of dicts: {"number": int, "group": int, "completed": bool}
+tickets = []            # list of dicts: {"number": int, "group": int, "completed": bool, "description": str}
 
 
 @app.route("/")
@@ -27,7 +27,7 @@ def professor():
 @socketio.on("request_ticket")
 def handle_ticket_request(data):
     """
-    Student requests a ticket. data contains {'group': int}.
+    Student requests a ticket. data contains {'group': int, 'description': str}.
     Behavior:
       - Always increment ticket_count and append ticket record.
       - If this is the first ticket ever (current_ticket == 0), set current_ticket = 1.
@@ -38,15 +38,16 @@ def handle_ticket_request(data):
     global ticket_count, current_ticket, tickets
     ticket_count += 1
     group_number = data.get("group", None)
+    description = data.get("description", "")
 
-    tickets.append({"number": ticket_count, "group": group_number, "completed": False})
+    tickets.append({"number": ticket_count, "group": group_number, "completed": False, "description": description})
 
     # If no one is currently being served, start serving the first ticket
     if current_ticket == 0:
         current_ticket = 1
 
     # Send personal ticket back to the requesting student only
-    emit("your_ticket", {"ticket_number": ticket_count, "group": group_number})
+    emit("your_ticket", {"ticket_number": ticket_count, "group": group_number, "description": description})
 
     # Broadcast updated state to everyone
     emit("update_count", {"count": ticket_count}, broadcast=True)

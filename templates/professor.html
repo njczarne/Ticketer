@@ -4,6 +4,13 @@
     <title>Professor Ticket Screen</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .ticket-description {
+            font-style: italic;
+            color: #555;
+            margin-left: 15px;
+        }
+    </style>
 </head>
 <body>
     <h1>Total Tickets: <span id="ticket-count">{{ count }}</span></h1>
@@ -20,6 +27,9 @@
             {% for ticket in tickets %}
                 <div class="ticket {% if ticket.completed %}completed{% endif %}">
                     Ticket {{ ticket.number }} - Group {{ ticket.group }}
+                    {% if ticket.description %}
+                        <div class="ticket-description">{{ ticket.description }}</div>
+                    {% endif %}
                 </div>
             {% endfor %}
         {% endif %}
@@ -62,7 +72,14 @@
             tickets.forEach(ticket => {
                 const div = document.createElement("div");
                 div.className = "ticket" + (ticket.completed ? " completed" : "");
-                div.innerText = "Ticket " + ticket.number + " - Group " + ticket.group;
+                div.innerHTML = "Ticket " + ticket.number + " - Group " + ticket.group;
+
+                if (ticket.description) {
+                    const descriptionDiv = document.createElement("div");
+                    descriptionDiv.className = "ticket-description";
+                    descriptionDiv.innerText = ticket.description;
+                    div.appendChild(descriptionDiv);
+                }
                 dashboardDiv.appendChild(div);
             });
         }

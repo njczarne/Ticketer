@@ -11,6 +11,9 @@
 
     <label for="group-input">Group:</label>
     <input type="number" id="group-input" placeholder="Enter group number" min="1">
+    <br>
+    <label for="description-input">Ticket Description:</label>
+    <input type="text" id="description-input" placeholder="Enter description (optional)">
     <br><br>
 
     <button onclick="takeTicket()">Take Ticket</button>
@@ -21,13 +24,14 @@
 
         function takeTicket() {
             const groupValue = document.getElementById("group-input").value;
+            const descriptionValue = document.getElementById("description-input").value;
 
             if (!groupValue || isNaN(groupValue) || groupValue <= 0) {
                 alert("Please enter a valid group number before taking a ticket.");
                 return;
             }
 
-            socket.emit("request_ticket", { group: parseInt(groupValue) });
+            socket.emit("request_ticket", { group: parseInt(groupValue), description: descriptionValue });
         }
 
         socket.on("update_count", function(data) {
@@ -51,6 +55,7 @@
             ticketField.innerText = "";
             ticketField.style.display = "none";
             document.getElementById("group-input").value = ""; // also clear group input
+            document.getElementById("description-input").value = "";
         });
     </script>
 </body>
